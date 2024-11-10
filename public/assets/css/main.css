@@ -1,3 +1,164 @@
-*{
-    background-color: antiquewhite;
+:root {
+    --color-font:#ffffff;
+    --color-button: #3498db;
+    --background-color-p: rgba(255, 255, 255, 0.1);
+    --background-color-modal: rgba(0, 0, 0, 0.8);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color-modal);
+    justify-content: center;
+    align-items: center;
+    color: var(--color-font);
+}
+
+.modal-content {
+    background-color: #34495e;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5em;
+    color: #aaa;
+    cursor: pointer;
+}
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Fondo de la página */
+body {
+    background-color: #2c3e50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contenedor de login */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background-color: var(--background-color-p);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+    color: var(--color-font);
+}
+
+.input-group {
+    margin: 15px 0;
+    position: relative;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    padding-left: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    outline: none;
+}
+select{
+    width: 100%;
+    padding: 10px;
+    padding-left: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    outline: none;
+}
+option{
+    color: black;
+}
+
+.icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    /* transform: translateY(-50%); */
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    color: var(--color-font);
+}
+
+.login-btn,
+.register-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--color-button);
+    color: var(--color-font);
+    cursor: pointer;
+}
+
+.register {
+    margin-top: 15px;
+    color: #fff;
+}
+
+.register a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+/* Estilos del modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #34495e;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5em;
+    color: #aaa;
+    cursor: pointer;
 }

@@ -1,13 +1,24 @@
 <?php
+
+namespace DB;
+
+use Exception;
+
 class ConnectDB{
+    // Connection data
     private const SERVER_NAME = "localhost";
-    private const CONNECT_OPTIONS = ["Database" => "RentaConstruccionDB"];
+    private const CONNECT_OPTIONS = [
+        "Database" => "RentaConstruccionDB",
+        "UID" => "AppRentaConstruccion",
+        "PWD" => "1234",
+        "CharacterSet" => "UTF-8" 
+    ];
 
     public static function connect(){
         try {
             $conn = sqlsrv_connect(ConnectDB::SERVER_NAME, ConnectDB::CONNECT_OPTIONS);
+            
             if ($conn) {
-                echo "Conexión exitosa";
                 return $conn;
             }else{
                 throw new Exception("NO se pudo conectar a la base de datos\n");
@@ -22,7 +33,7 @@ class ConnectDB{
 
 //  ejemplo de consulta
 
-// // Definir la consulta SQL
+// Definir la consulta SQL
 // $sql = "SELECT * FROM usuario";
 
 // $conn = ConnectDB::connect();

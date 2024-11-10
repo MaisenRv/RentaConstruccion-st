@@ -7,8 +7,9 @@
     <link rel="stylesheet" href= "assets/css/main.css">
 </head>
 <body>
-    <main class="h">
+    <main >
         <?PHP if (isset($view)) { include($view); } ?>
     </main>
+    <script src="assets/js/login.js"></script>
 </body>
 </html>

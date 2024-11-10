@@ -1,17 +1,23 @@
 <?PHP
+namespace Core;
 
 class BaseController{
+    protected $dao;
+
+    public function __construct($dao) {
+        $this->dao = $dao;
+    }
+
     protected function loadView($viewPath, $data = []){
         extract($data);
         $view = __DIR__."/../views/{$viewPath}.php";
         require __DIR__.'/../views/layouts/main.php';
     }
-    protected function index(){
-        $this->loadView('login',['title'=> 'Login']);
+
+    // Dao methods
+    public function getAll(){
+        return $this->dao->getAll();
     }
-    // public function admin(){
-    //     $this->loadView('admin/admin',['title'=> 'admin','showAdmin'=>false]);
-    // }
 }
 
 ?>

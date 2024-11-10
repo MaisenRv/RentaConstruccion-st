@@ -1,11 +1,14 @@
 <?PHP 
-require_once __DIR__."/../app/controllers/user/UserC.php";
-require_once __DIR__."/../app/db.php";
+require_once __DIR__."/../app/autoload.php";
+use Controllers\UserC;
+use Controllers\RolC;
 
 $actionName = isset($_GET['action']) ? $_GET['action'] : 'login';
 
 // Controllers
 $userC = new UserC();
+$rolC = new RolC();
+
 
 function checkSession(){
     if (session_status() == PHP_SESSION_NONE) {
@@ -21,7 +24,7 @@ function checkSession(){
 
 // Router
 if($actionName == "login"){
-    $userC->login();
+    $userC->login($rolC->getAll());
 }elseif(checkSession()){
 
 }
