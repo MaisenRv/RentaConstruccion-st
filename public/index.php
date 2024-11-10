@@ -1,13 +1,16 @@
 <?PHP 
 require_once __DIR__."/../app/autoload.php";
-use Controllers\UserC;
+
+use Controllers\LocalidadC;
 use Controllers\RolC;
+use Controllers\UsuarioC;
 
 $actionName = isset($_GET['action']) ? $_GET['action'] : 'login';
 
 // Controllers
-$userC = new UserC();
+$usuarioC = new UsuarioC();
 $rolC = new RolC();
+$localidadC = new LocalidadC();
 
 
 function checkSession(){
@@ -15,7 +18,7 @@ function checkSession(){
         session_start();
     }
     if(!isset($_SESSION['correo']) || !isset($_SESSION['contrasena'])){
-        UserC::blockSession();
+        UsuarioC::blockSession();
         return false;
     }
     return true;
@@ -24,7 +27,7 @@ function checkSession(){
 
 // Router
 if($actionName == "login"){
-    $userC->login($rolC->getAll());
+    $usuarioC->login($rolC->getAll(),$localidadC->getAll());
 }elseif(checkSession()){
 
 }

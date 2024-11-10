@@ -4,12 +4,12 @@
         <form action="#">
             <div class="input-group">
                 <label for="email">Correo Electrónico</label>
-                <input type="email" id="email" placeholder="Correo Electrónico">
+                <input type="email" id="email" placeholder="Correo Electrónico" class="login-input">
                 <span class="icon">📧</span>
             </div>
             <div class="input-group">
                 <label for="password">Contraseña</label>
-                <input type="password" id="password" placeholder="Contraseña">
+                <input type="password" id="password" placeholder="Contraseña" class="login-input">
                 <span class="icon">🔒</span>
             </div>
             <div class="options">
@@ -55,7 +55,9 @@
             <div class="input-group">
                 <label for="localidad">Localidad</label>
                 <select name="localidad" id="localidad">
-                    <option value="1">tt</option>
+                    <?PHP foreach ($localidades as $l) { ?>
+                        <option value="<?PHP echo $l->getCodigoLocalidad() ?>"><?PHP echo $l->getNombreLocalidad(); ?></option>
+                    <?PHP }; ?>
                 </select>
             </div>
             <div class="input-group">
