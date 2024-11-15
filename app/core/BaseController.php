@@ -4,7 +4,7 @@ namespace Core;
 class BaseController{
     protected $dao;
 
-    public function __construct($dao) {
+    public function __construct($dao = null) {
         $this->dao = $dao;
     }
 
@@ -16,7 +16,9 @@ class BaseController{
 
     // Dao methods
     public function getAll(){
-        return $this->dao->getAll();
+        if (!is_null($this->dao)) {
+            return $this->dao->getAll();
+        }
     }
 }
 

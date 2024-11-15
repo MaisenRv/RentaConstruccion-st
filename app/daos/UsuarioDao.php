@@ -30,22 +30,27 @@ class UsuarioDao extends BaseDao {
         }
     }
 
-    // public function getById($id) {
-    //     $this->prepareQuery('SELECT * FROM Usuario WHERE CodigoUsuario = ?');
-    //     $this->bindParam(1, $id);
-    //     $result = $this->execute();
-    //     if (!is_null($result)) {
-    //         $row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
-    //         return new Usuario(
-    //             $row['Contraseña'], 
-    //             $row['RazonSocial'], 
-    //             $row['CodigoLocalidad'], 
-    //             $row['Direccion'], 
-    //             $row['Correo'], 
-    //             $row['Telefono'], 
-    //             $row['CodigoRol'], 
-    //             $row['CodigoUsuario']
-    //         );
-    //     }
-    // }
+    public function loginCheck(Usuario $usuario) {
+        $params = [$usuario->getCorreo(),$usuario->getContraseña()];
+        $this->prepareQuery('SELECT * FROM Usuario WHERE Correo = ? AND Contraseña = ?',$params);
+        $result = $this->execute();
+
+        if (is_null($result)){ return null; }
+        
+        if ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) { 
+            return new Usuario(
+                $row['Contraseña'], 
+                $row['RazonSocial'], 
+                $row['CodigoLocalidad'], 
+                $row['Direccion'], 
+                $row['Correo'], 
+                $row['Telefono'], 
+                $row['CodigoRol'], 
+                $row['CodigoUsuario']
+            );
+        }else{
+            return null;
+        }
+        
+    }
 }

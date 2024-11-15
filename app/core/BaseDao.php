@@ -30,6 +30,7 @@ class BaseDao{
             $this->stm = null;
             return $stm_res;
         }else{
+            die(print_r(sqlsrv_errors(), true));
             return null;
         }
     }
