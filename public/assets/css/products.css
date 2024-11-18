@@ -1,0 +1,29 @@
+.product-detail {
+    background-color: #2b3f50;
+    border: 2px solid transparent; /* Borde transparente por defecto */
+    border-radius: 10px;
+    padding: 10px; /* Tamaño reducido */
+    width: 250px; /* Card compacto */
+    text-align: center;
+    height: max-content;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    transition: transform 0.3s, border-color 0.3s; /* Animación suave */
+}
+.product-detail:hover {
+    border-color: #ffffff; /* Borde blanco al pasar el mouse */
+    transform: translateY(-10px) scale(1.05); /* Movimiento hacia arriba y ligero zoom */
+}
+.product-detail img {
+    width: 100%;
+    max-width: 200px; /* Imagen más pequeña */
+    border-radius: 10px;
+}
+.product-detail h2 {
+    font-size: 18px; /* Texto más pequeño */
+    margin: 10px 0;
+}
+.product-detail p {
+    font-size: 14px; /* Texto más pequeño */
+    margin: 5px 0;
+}

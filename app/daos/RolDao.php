@@ -15,7 +15,7 @@ class RolDao extends BaseDao{
         $result = $this->execute();
         if(!is_null($result)){
             $roles = [];
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+            foreach($this->fetchAll($result) as $row) {
                 $rol = new Rol($row['Rol'],$row['CodigoRol']);
                 $roles[] = $rol;
             }

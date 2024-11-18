@@ -1,8 +1,10 @@
 <div class="card-container">
-    <a href="demolicion.html" class="card">
-        <h3>Demolición</h3>
-    </a>
-    <a href="obra-gruesa.html" class="card">
+    <?PHP foreach($categorias as $c){ ?>
+        <a href="index.php?action=productos&categoria=<?PHP echo $c->getIdCategoria(); ?>" class="card">
+            <h3><?PHP echo $c->getCategoria(); ?></h3>
+        </a>
+    <?PHP }?>
+    <!-- <a href="obra-gruesa.html" class="card">
         <h3>Obra Gruesa</h3>
     </a>
     <a href="compartacion.html" class="card">
@@ -25,5 +27,5 @@
     </a>
     <a href="trabajo-alturas.html" class="card">
         <h3>Trabajo en Alturas</h3>
-    </a>
+    </a> -->
 </div>

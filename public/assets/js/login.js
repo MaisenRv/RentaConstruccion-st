@@ -41,7 +41,13 @@ const notEmtyForm = (form)=>{
     }
     return isEmty
 }
-
+const passCheck = (inputs)=>{
+    if (!(inputs[0].value == inputs[1].value)) {
+        alert('las contraseñas deben se iguales')
+        return true;
+    }
+    return false;
+}
 
 // Validaciones
 const formLogin = document.getElementById('formLogin')
@@ -53,10 +59,13 @@ formLogin.addEventListener('submit',(e)=>{
 
 const formRegister = document.getElementById('fromRegistro')
 formRegister.addEventListener('submit',(e)=>{
-    if(notEmtyForm(formRegister)){
+    const pass1 = document.getElementById('password-reg');
+    const pass2 = document.getElementById('confirm-password');
+    if(notEmtyForm(formRegister) || passCheck([pass1,pass2])){
         e.preventDefault()
     }
 })
+
 
 
 

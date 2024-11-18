@@ -7,14 +7,25 @@ class Producto {
     private $precioDeRenta;
     private $codigoMarca;
     private $idCategoria;
+    private $urlImg;
 
-    public function __construct($nombreProducto, $estadoProducto, $precioDeRenta, $codigoMarca, $idCategoria, $codigoProducto = null) {
+    private Marca $marca;
+
+    public function __construct($nombreProducto, $estadoProducto, $precioDeRenta, $codigoMarca, $idCategoria,$urlImg, $codigoProducto = null) {
         $this->codigoProducto = $codigoProducto;
         $this->nombreProducto = $nombreProducto;
         $this->estadoProducto = $estadoProducto;
         $this->precioDeRenta = $precioDeRenta;
         $this->codigoMarca = $codigoMarca;
         $this->idCategoria = $idCategoria;
+        $this->urlImg = $urlImg;
+    }
+
+    public function getUrlImg(){
+        return $this->urlImg;
+    }
+    public function setUrlImg($urlImg) {
+        $this->urlImg = $urlImg;
     }
 
     public function getCodigoProducto() {
@@ -63,5 +74,13 @@ class Producto {
 
     public function setIdCategoria($idCategoria) {
         $this->idCategoria = $idCategoria;
+    }
+    public function setMarca(Marca $marca) {
+        $this->marca = $marca;
+    }
+    public function getMarca(){
+        if (isset($this->marca)) {
+            return $this->marca;
+        }
     }
 }

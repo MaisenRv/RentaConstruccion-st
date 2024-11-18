@@ -20,6 +20,12 @@ class BaseController{
             return $this->dao->getAll();
         }
     }
+
+    protected function create($model){
+        if (!is_null($this->dao)) {
+            return $this->dao->create($model);
+        }
+    }
 }
 
 ?>

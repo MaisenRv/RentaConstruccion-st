@@ -12,9 +12,16 @@ class ViewC extends BaseController{
             'localidades' => $localidades
         ]);
     }
-    public function load_home(){
+    public function load_home($categorias){
         $this->loadView('home',[
-            'title' => 'Home'
+            'title' => 'Home',
+            'categorias' => $categorias
+        ]);
+    }
+    public function load_products($productos){
+        $this->loadView('products',[
+            'title' => 'Productos',
+            'productos' => $productos
         ]);
     }
 }

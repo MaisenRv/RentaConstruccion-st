@@ -19,12 +19,26 @@ class UsuarioC extends BaseController
     }
 
     public static function logout(){
-        if (session_status() == PHP_SESSION_ACTIVE) {
-            session_unset();
-            session_destroy();
-            UsuarioC::blockSession();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
         }
+        session_unset();
+        session_destroy();
+        UsuarioC::blockSession();
     }
+
+    public static function checkSession(){
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if(!isset($_SESSION['contraseña']) || !isset($_SESSION['correo'])){
+            UsuarioC::blockSession();
+            return false;
+        }
+        return true;
+    
+    }
+    
     public function login(){
         $usuario = new Usuario($_POST['password'],null,null,$_POST['email'],null,null,null);
         $result = $this->dao->loginCheck($usuario);
@@ -48,6 +62,17 @@ class UsuarioC extends BaseController
             UsuarioC::blockSession();
         }
     }
-
+    public function register(){
+        $newUsuario = new Usuario(
+            $_POST['contrasena'],
+            $_POST['razonSocial'],
+            $_POST['localidad'],
+            $_POST['email'],
+            $_POST['rol'],
+            $_POST['direccion'],
+            $_POST['telefono']
+        );
+        $this->create($newUsuario);
+    }
 
 }

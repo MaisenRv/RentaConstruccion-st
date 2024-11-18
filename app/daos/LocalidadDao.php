@@ -14,7 +14,7 @@ class LocalidadDao extends BaseDao {
         $result = $this->execute();
         if (!is_null($result)) {
             $localidades = [];
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+            foreach($this->fetchAll($result) as $row) {
                 $localidad = new Localidad($row['NombreLocalidad'], $row['CodigoLocalidad']);
                 $localidades[] = $localidad;
             }

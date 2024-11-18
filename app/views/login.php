@@ -27,7 +27,7 @@
     <div class="modal-content">
         <span class="close" id="close-register-modal">&times;</span>
         <h2>Registro</h2>
-        <form action="#" id="fromRegistro">
+        <form action="index.php?action=register" id="fromRegistro" method="post">
             <div class="input-group">
                 <label for="razonSocial">Razon social</label>
                 <input type="text" id="razon_s" name="razonSocial" placeholder="Razon social" required>
@@ -37,8 +37,8 @@
                 <input type="email" id="email-reg" name="email" placeholder="Correo Electrónico" required>
             </div>
             <div class="input-group">
-                <label for="constraseña-reg">Contraseña</label>
-                <input type="password" id="password-reg" name="constraseña" placeholder="Contraseña" required>
+                <label for="contrasena">Contraseña</label>
+                <input type="password" id="password-reg" name="contrasena" placeholder="Contraseña" required>
             </div>
             <div class="input-group">
                 <label for="confirmarContraseña">Confirmar Contraseña</label>

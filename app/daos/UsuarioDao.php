@@ -53,4 +53,9 @@ class UsuarioDao extends BaseDao {
         }
         
     }
+
+    public function create(Usuario $newUser){
+        $params = [];
+        $sql = '';
+    }
 }
