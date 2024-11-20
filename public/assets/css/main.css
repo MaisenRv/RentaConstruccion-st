@@ -7,11 +7,9 @@
 main{
     font-family: Arial, sans-serif;
     display: flex;
-    justify-content: center;
-    height: 100vh ;
+    flex-direction: column;
+    height: 90vh ;
     box-sizing: border-box;
-    margin-top: 30px;
-    flex-wrap: wrap;
     gap: 20px;
     width: 80%;
 }
@@ -67,6 +65,7 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: auto;
 }
 
 .login-box {
@@ -128,7 +127,8 @@ option{
 }
 
 .login-btn,
-.register-btn {
+.register-btn,
+.btn {
     width: 100%;
     padding: 10px;
     margin-top: 15px;
@@ -177,4 +177,14 @@ option{
     font-size: 1.5em;
     color: #aaa;
     cursor: pointer;
+}
+
+.general-inputs{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    outline: none; 
 }

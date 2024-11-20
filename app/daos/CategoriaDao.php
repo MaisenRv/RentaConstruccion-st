@@ -1,6 +1,7 @@
 <?PHP 
 namespace DAOS;
 use Core\BaseDao;
+use Exception;
 use Models\Categoria;
 
 class CategoriaDao extends BaseDao {
@@ -13,11 +14,29 @@ class CategoriaDao extends BaseDao {
         $result = $this->execute();
         if (!is_null($result)) {
             $categorias = [];
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+            foreach ($this->fetchAll($result) as $row) {
                 $categoria = new Categoria($row['Categoria'], $row['IdCategoria']);
                 $categorias[] = $categoria;
             }
             return $categorias;
+        }
+    }
+
+    public function getCategorysByUser($codigoUsuario){
+        try {
+            $params = [$codigoUsuario];
+            $this->prepareQuery('EXEC S_Categoria ?',$params);
+            $result = $this->execute();
+            if (!is_null($result)) {
+                $categorias = [];
+                foreach ($this->fetchAll($result) as $row) {
+                    $categoria = new Categoria($row['Categoria'], $row['IdCategoria']);
+                    $categorias[] = $categoria;
+                }
+                return $categorias;
+            }
+        } catch (Exception $e) {
+            $this->showMessages();
         }
     }
 

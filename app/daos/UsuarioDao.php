@@ -1,6 +1,7 @@
 <?PHP 
 namespace DAOS;
 use Core\BaseDao;
+use Exception;
 use Models\Usuario;
 
 class UsuarioDao extends BaseDao {
@@ -42,10 +43,10 @@ class UsuarioDao extends BaseDao {
                 $row['Contraseña'], 
                 $row['RazonSocial'], 
                 $row['CodigoLocalidad'], 
-                $row['Direccion'], 
                 $row['Correo'], 
-                $row['Telefono'], 
                 $row['CodigoRol'], 
+                $row['Direccion'], 
+                $row['Telefono'], 
                 $row['CodigoUsuario']
             );
         }else{
@@ -55,7 +56,26 @@ class UsuarioDao extends BaseDao {
     }
 
     public function create(Usuario $newUser){
-        $params = [];
-        $sql = '';
+        // Prueba del sp
+        try{
+            $params = [$newUser->getContraseña(),
+                        $newUser->getRazonSocial(),
+                        $newUser->getCodigoLocalidad(),
+                        $newUser->getDireccion(),
+                        $newUser->getCorreo(),
+                        $newUser->getTelefono(),
+                        $newUser->getCodigoRol()
+                    ];
+            // $sql = "EXEC I_usuario 'cotraseña','razon social',localidad,'direccion','correo','telefno',200'";
+            $sql = "EXEC I_usuario ?,?,?,?,?,?,?";
+            $this->prepareQuery($sql,$params);
+            $result = $this->execute();
+            if (is_null($result)){ return null; }
+            
+        }catch (Exception $e){
+            echo '<script>window.history.back();</script>';
+            $this->showMessages();
+            exit;
+        }
     }
 }

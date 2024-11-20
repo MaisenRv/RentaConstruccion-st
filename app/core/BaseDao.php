@@ -41,16 +41,29 @@ class BaseDao{
         }
         return $results;
     }
-    protected function getTriggerMessages($statement){
+    protected function getMessages(){
         $messages = [];
-        while (sqlsrv_next_result($statement)) {
-            if (($errors = sqlsrv_errors(SQLSRV_ERR_ERRORS)) !== null) {
-                foreach ($errors as $error) {
-                    $messages[] = $error['message'];
-                }
+        $errors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
+        if ($errors !== null) {
+            foreach ($errors as $error) {
+                $messages[] = "Error: " . $error['message'];
             }
         }
-        return $messages;
+        $warnings = sqlsrv_errors(SQLSRV_ERR_WARNINGS); 
+        if ($warnings !== null) {
+            foreach ($warnings as $warning) {
+                $messages[] = "Print: " . $warning['message'];
+            }
+        }
+    
+        return $messages; 
+    }
+
+    protected function showMessages(){
+        foreach($this->getMessages() as $r){
+            echo '<script>alert("'.substr($r, 61).'");</script>';
+            // echo '<script>alert("'.$r.'");</script>';
+        }
     }
 }
 

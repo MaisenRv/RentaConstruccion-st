@@ -51,35 +51,52 @@ const passCheck = (inputs)=>{
 
 // Validaciones
 const formLogin = document.getElementById('formLogin')
-formLogin.addEventListener('submit',(e)=>{
-    if(notEmtyForm(formLogin)){
-        e.preventDefault()
-    }
-})
+if(formLogin){
+    formLogin.addEventListener('submit',(e)=>{
+        if(notEmtyForm(formLogin)){
+            e.preventDefault()
+        }
+    })
+}
 
 const formRegister = document.getElementById('fromRegistro')
-formRegister.addEventListener('submit',(e)=>{
-    const pass1 = document.getElementById('password-reg');
-    const pass2 = document.getElementById('confirm-password');
-    if(notEmtyForm(formRegister) || passCheck([pass1,pass2])){
-        e.preventDefault()
-    }
-})
+if(formRegister){
+    formRegister.addEventListener('submit',(e)=>{
+        const pass1 = document.getElementById('password-reg');
+        const pass2 = document.getElementById('confirm-password');
+        if(notEmtyForm(formRegister) || passCheck([pass1,pass2])){
+            e.preventDefault()
+        }
+    })
+}
+
+const formAddProduct = document.getElementById('AddProductForm')
+if(formAddProduct){
+    formAddProduct.addEventListener('submit',(e)=>{
+        if(notEmtyForm(formAddProduct)){
+            e.preventDefault()
+        }
+    })
+}
 
 
 
 
 
 // Abrir el modal de registro
-registerLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    registerModal.style.display = 'flex';
-});
+if (registerLink) {
+    registerLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerModal.style.display = 'flex';
+    });
+}
 
 // Cerrar el modal de registro
-closeRegisterModal.addEventListener('click', () => {
-    registerModal.style.display = 'none';
-});
+if (closeRegisterModal) {
+    closeRegisterModal.addEventListener('click', () => {
+        registerModal.style.display = 'none';
+    });
+}
 
 // Abrir el modal de recuperar contraseña
 // forgotPasswordLink.addEventListener('click', (e) => {

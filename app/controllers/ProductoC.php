@@ -11,5 +11,11 @@ class ProductoC extends BaseController{
     public function getByCategoria($idCategoria){
         return $this->dao->getProductsCategory($idCategoria);
     }
+    public function getProductsByUser($codigoUsuario,$codigoRol){
+        if ($codigoRol == UsuarioC::CODIGO_ROL_PROVEEDOR) {
+            return $this->dao->getProductsByUser($codigoUsuario);
+        }
+        return $this->dao->getAll();
+    }
 }
 ?>

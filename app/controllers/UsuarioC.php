@@ -8,6 +8,7 @@ use Models\Usuario;
 
 class UsuarioC extends BaseController
 {
+    public const CODIGO_ROL_PROVEEDOR = 10; 
     public function __construct(){
         parent::__construct(new UsuarioDao);
     }

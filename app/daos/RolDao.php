@@ -11,7 +11,7 @@ class RolDao extends BaseDao{
     }
 
     public function getAll(){
-        $this->prepareQuery('select * from Rol');
+        $this->prepareQuery("SELECT * FROM Rol WHERE CodigoRol <> 0 AND Rol <> 'Administrador'");
         $result = $this->execute();
         if(!is_null($result)){
             $roles = [];

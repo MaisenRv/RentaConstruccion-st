@@ -1,6 +1,7 @@
 <?PHP 
 namespace DAOS;
 use Core\BaseDao;
+use Exception;
 use Models\Marca;
 use Models\Producto;
 
@@ -62,7 +63,34 @@ class ProductoDao extends BaseDao {
         return null;
     }
 
+    
+    public function getProductsByUser($codigoUsuario){
+        try {
+            $params = [$codigoUsuario];
+            $this->prepareQuery('EXEC S_Productos ?',$params);
+            $result = $this->execute();
+            $products = [];
+            if (is_null($result)){ return null; }
+            foreach($this->fetchAll($result) as $row){
+                $product = new Producto(
+                    $row['NombreProducto'],
+                    $row['EstadoProducto'],
+                    $row['PrecioDeRenta'],
+                    $row['CodigoMarca'],
+                    $row['IdCategoria'],
+                    $row['urlImg'],
+                    $row['CodigoProducto']
+                );
+                $marca = new Marca($row['NombreMarca'],$row['CodigoMarca']);
+                $product->setMarca($marca);
+                $products[] = $product;
+            }
+            return $products;
 
+        } catch (Exception $e) {
+            $this->showMessages();
+        }
+    }
     // public function getById($id) {
     //     $this->prepareQuery('SELECT * FROM Producto WHERE CodigoProducto = ?');
     //     $this->bindParam(1, $id);

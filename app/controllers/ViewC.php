@@ -12,16 +12,32 @@ class ViewC extends BaseController{
             'localidades' => $localidades
         ]);
     }
-    public function load_home($categorias){
+    public function load_home($razonSocial){
         $this->loadView('home',[
             'title' => 'Home',
-            'categorias' => $categorias
+            'razonSocial' => $razonSocial
         ]);
     }
-    public function load_products($productos){
-        $this->loadView('products',[
+    public function load_category($categorias,$codigoUsuario){
+        $this->loadView('category',[
+            'title' => 'Categorias',
+            'categorias' => $categorias,
+            'codigoUsuario' => $codigoUsuario
+        ]);
+    }
+    public function load_products($productos,$rolUsuario){
+        $this->loadView('product/products',[
             'title' => 'Productos',
-            'productos' => $productos
+            'productos' => $productos,
+            'rolUsuario'=> $rolUsuario
+        ]);
+    }
+
+    public function load_add_products($categorias,$marcas){
+        $this->loadView('product/addProduct',[
+            'title' => 'Crear Producto',
+            'categorias' => $categorias,
+            'marcas' => $marcas
         ]);
     }
 }
