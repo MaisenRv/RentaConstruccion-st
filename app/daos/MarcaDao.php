@@ -8,7 +8,8 @@ class MarcaDao extends BaseDao {
         parent::__construct();
     }
 
-    public function getAll() {
+    public function getAll($userType) {
+        $this->setUserType($userType);
         $this->prepareQuery('SELECT * FROM Marca');
         $result = $this->execute();
         if (!is_null($result)) {

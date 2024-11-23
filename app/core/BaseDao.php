@@ -9,13 +9,24 @@ class BaseDao{
     private $stm;
 
     public function __construct() {
-        $this->conn = ConnectDB::connect();
+        $this->conn = null;
         $this->stm = null;
     }
+
+    public function setUserType($userType){
+        if ($userType == 'Cliente') {
+            $this->conn = ConnectDB::connect_cliente();
+        }elseif($userType == 'Proveedor'){
+            $this->conn = ConnectDB::connect_proveedor();
+        }
+    }
+
     protected function prepareQuery(string $sql, ?Array $params = null){
-        $this->stm = sqlsrv_prepare($this->conn,$sql,$params);
-        if ($this->stm === false) {
-            throw new Exception("Error al preparar la consulta: " . print_r(sqlsrv_errors(), true));
+        if ($this->conn != null) {
+            $this->stm = sqlsrv_prepare($this->conn,$sql,$params);
+            if ($this->stm === false) {
+                throw new Exception("Error al preparar la consulta: " . print_r(sqlsrv_errors(), true));
+            }
         }
     }
 

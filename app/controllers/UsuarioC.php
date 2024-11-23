@@ -3,14 +3,17 @@
 namespace Controllers;
 
 use Core\BaseController;
+use DAOS\RolDao;
 use DAOS\UsuarioDao;
 use Models\Usuario;
 
 class UsuarioC extends BaseController
 {
     public const CODIGO_ROL_PROVEEDOR = 10; 
+    private $userType = null;
     public function __construct(){
         parent::__construct(new UsuarioDao);
+
     }
     public static function blockSession(){    
         echo "<script>
@@ -40,9 +43,9 @@ class UsuarioC extends BaseController
     
     }
     
-    public function login(){
+    public function login($userType){
         $usuario = new Usuario($_POST['password'],null,null,$_POST['email'],null,null,null);
-        $result = $this->dao->loginCheck($usuario);
+        $result = $this->dao->loginCheck($usuario,$userType);
         if(!is_null($result)){
             session_start();
             $_SESSION['correo'] = $result->getCorreo();
@@ -63,7 +66,7 @@ class UsuarioC extends BaseController
             UsuarioC::blockSession();
         }
     }
-    public function register(){
+    public function register($userType){
         $newUsuario = new Usuario(
             $_POST['contrasena'],
             $_POST['razonSocial'],
@@ -73,7 +76,28 @@ class UsuarioC extends BaseController
             $_POST['direccion'],
             $_POST['telefono']
         );
-        $this->create($newUsuario);
+        $this->create($newUsuario,$userType);
+    }
+    private function checkSessionStatus(){
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if(!isset($_SESSION['contraseña']) || !isset($_SESSION['correo'])){
+            return false;
+        }
+        return true;
+    }
+    public function getUserType(){
+        if($this->checkSessionStatus()){
+            $roldao = new RolDao();
+            $rol = $roldao->getById($_SESSION['codigoRol'],$this->userType);
+            $this->userType = $rol->getRol();
+
+            return $this->userType;
+        }else{
+            $this->userType = 'Cliente';
+            return $this->userType;
+        }
     }
 
 }

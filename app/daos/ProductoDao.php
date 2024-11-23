@@ -10,7 +10,8 @@ class ProductoDao extends BaseDao {
         parent::__construct();
     }
 
-    public function getAll() {
+    public function getAll($userType) {
+        $this->setUserType($userType);
         $this->prepareQuery('SELECT * FROM Producto p INNER JOIN marca m ON p.CodigoMarca = m.CodigoMarca ');
         $result = $this->execute();
         if (!is_null($result)) {
@@ -32,7 +33,8 @@ class ProductoDao extends BaseDao {
             return $productos;
         }
     }
-    public function getProductsCategory($idCategory){
+    public function getProductsCategory($idCategory,$userType){
+        $this->setUserType($userType);
         $params = [$idCategory];
         $this->prepareQuery('SELECT * FROM Producto p
                             INNER JOIN marca m ON p.CodigoMarca = m.CodigoMarca 
@@ -64,8 +66,9 @@ class ProductoDao extends BaseDao {
     }
 
     
-    public function getProductsByUser($codigoUsuario){
+    public function getProductsByUser($codigoUsuario,$userType){
         try {
+            $this->setUserType($userType);
             $params = [$codigoUsuario];
             $this->prepareQuery('EXEC S_Productos ?',$params);
             $result = $this->execute();
@@ -91,20 +94,28 @@ class ProductoDao extends BaseDao {
             $this->showMessages();
         }
     }
-    // public function getById($id) {
-    //     $this->prepareQuery('SELECT * FROM Producto WHERE CodigoProducto = ?');
-    //     $this->bindParam(1, $id);
-    //     $result = $this->execute();
-    //     if (!is_null($result)) {
-    //         $row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
-    //         return new Producto(
-    //             $row['NombreProducto'], 
-    //             $row['EstadoProducto'], 
-    //             $row['PrecioDeRenta'], 
-    //             $row['CodigoMarca'], 
-    //             $row['IdCategoria'], 
-    //             $row['CodigoProducto']
-    //         );
-    //     }
-    // }
+
+    public function create(Producto $newProduct,$userType,$args){
+        try {
+            $this->setUserType($userType);
+            extract($args);
+            $params = [
+                $proveedor,
+                $newProduct->getNombreProducto(),
+                $newProduct->getEstadoProducto(),
+                $newProduct->getPrecioDeRenta(),
+                $newProduct->getCodigoMarca(),
+                $newProduct->getIdCategoria(),
+                $newProduct->getUrlImg(),
+                $cantidad
+            ];
+
+            $sql = "EXEC I_Producto ?,?,?,?,?,?,?,?";
+            $this->prepareQuery($sql,$params);
+            $this->execute();
+        } catch (Exception $e) {
+            $this->showMessages();
+        }
+    }
+
 }

@@ -15,15 +15,15 @@ class BaseController{
     }
 
     // Dao methods
-    public function getAll(){
+    public function getAll(string $userType){
         if (!is_null($this->dao)) {
-            return $this->dao->getAll();
+            return $this->dao->getAll($userType);
         }
     }
 
-    protected function create($model){
+    protected function create($model,$userType, $args = []){
         if (!is_null($this->dao)) {
-            return $this->dao->create($model);
+            return $this->dao->create($model,$userType, $args);
         }
     }
 }

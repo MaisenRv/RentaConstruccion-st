@@ -31,7 +31,8 @@ class UsuarioDao extends BaseDao {
         }
     }
 
-    public function loginCheck(Usuario $usuario) {
+    public function loginCheck(Usuario $usuario,$userType) {
+        $this->setUserType($userType);
         $params = [$usuario->getCorreo(),$usuario->getContraseña()];
         $this->prepareQuery('SELECT * FROM Usuario WHERE Correo = ? AND Contraseña = ?',$params);
         $result = $this->execute();
@@ -55,9 +56,9 @@ class UsuarioDao extends BaseDao {
         
     }
 
-    public function create(Usuario $newUser){
-        // Prueba del sp
+    public function create(Usuario $newUser,$userType, $args){
         try{
+            $this->setUserType($userType);
             $params = [$newUser->getContraseña(),
                         $newUser->getRazonSocial(),
                         $newUser->getCodigoLocalidad(),
