@@ -13,6 +13,7 @@ class BaseDao{
         $this->stm = null;
     }
 
+    // Dependiendo del tipo de usuario utiliza una conexion u otra
     public function setUserType($userType){
         if ($userType == 'Cliente') {
             $this->conn = ConnectDB::connect_cliente();
@@ -52,6 +53,7 @@ class BaseDao{
         }
         return $results;
     }
+    // Me devuelve los mensajes de error
     protected function getMessages(){
         $messages = [];
         $errors = sqlsrv_errors(SQLSRV_ERR_ERRORS);

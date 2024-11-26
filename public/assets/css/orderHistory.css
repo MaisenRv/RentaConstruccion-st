@@ -1,0 +1,44 @@
+.historial-container {
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 900px;
+  background-color: #2c3e50;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.historial-header {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-bottom: 2px solid white;
+  padding-bottom: 5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #9ea9c1;
+}
+
+th {
+  background-color: #6d9aa5;
+}
+
+tr:hover {
+  background-color: #34495e;
+}
+
+.order-btn {
+  margin-top: 10px;
+  justify-self: end;
+}

@@ -8,6 +8,8 @@
     <link rel="stylesheet" href= "assets/css/home.css">
     <link rel="stylesheet" href= "assets/css/nav.css">
     <link rel="stylesheet" href= "assets/css/products.css">
+    <link rel="stylesheet" href= "assets/css/stock.css">
+    <link rel="stylesheet" href= "assets/css/orderHistory.css">
 </head>
 <body>
     <?PHP if(!(session_status() == PHP_SESSION_NONE) && isset($_SESSION['correo']) && $title !='Login'){?>

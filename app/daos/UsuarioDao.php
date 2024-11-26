@@ -67,7 +67,6 @@ class UsuarioDao extends BaseDao {
                         $newUser->getTelefono(),
                         $newUser->getCodigoRol()
                     ];
-            // $sql = "EXEC I_usuario 'cotraseña','razon social',localidad,'direccion','correo','telefno',200'";
             $sql = "EXEC I_usuario ?,?,?,?,?,?,?";
             $this->prepareQuery($sql,$params);
             $result = $this->execute();
@@ -76,7 +75,7 @@ class UsuarioDao extends BaseDao {
         }catch (Exception $e){
             echo '<script>window.history.back();</script>';
             $this->showMessages();
-            exit;
+            exit();
         }
     }
 }

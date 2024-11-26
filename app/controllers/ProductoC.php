@@ -10,8 +10,8 @@ class ProductoC extends BaseController{
         parent::__construct(new ProductoDao());
     }
     
-    public function getByCategoria($idCategoria){
-        return $this->dao->getProductsCategory($idCategoria);
+    public function getByCategoria($idCategoria,$userType){
+        return $this->dao->getProductsCategory($idCategoria,$userType);
     }
 
     public function getProductsByUser($codigoUsuario,$codigoRol,$userType){
@@ -32,6 +32,10 @@ class ProductoC extends BaseController{
         );
         $cantidad = $_POST['CantidadProducto'];
         $this->create($newProduct,$userType,['proveedor'=>$codigoProveedor,'cantidad'=>$cantidad]);
+    }
+
+    public function getProductById($id,$userType){
+        return $this->dao->getProductById($id,$userType);
     }
 }
 ?>

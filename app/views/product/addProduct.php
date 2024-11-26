@@ -1,5 +1,5 @@
 <div class="container-product-general">
-    <form method="post" action="index.php?action=#" id="AddProductForm">
+    <form method="post" action="index.php?action=crear_producto" id="AddProductForm">
         <div class="input-group">
             <label for="nombreProducto">Nombre del producto</label>
             <input type="text" name="nombreProducto" id="nombreProducto" placeholder="Nombre del producto" class="general-inputs">
@@ -33,6 +33,10 @@
                     <option value="<?PHP echo $c->getIdCategoria() ?>"><?PHP echo $c->getCategoria(); ?></option>
                 <?PHP }; ?>
             </select>
+        </div>
+        <div class="input-group">
+            <label for="CantidadProducto">Cantidad de unidades</label>
+            <input type="number" name="CantidadProducto" id="CantidadProducto" placeholder="Cantidad de unidades" class="general-inputs">
         </div>
         <button type="submit" class="login-btn">Crear</button>
     </form>

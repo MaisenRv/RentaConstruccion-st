@@ -109,10 +109,44 @@ class ProductoDao extends BaseDao {
                 $newProduct->getUrlImg(),
                 $cantidad
             ];
-
             $sql = "EXEC I_Producto ?,?,?,?,?,?,?,?";
             $this->prepareQuery($sql,$params);
             $this->execute();
+            header('Location: index.php?action=productos');
+            exit();
+        } catch (Exception $e) {
+            $this->showMessages();
+            exit();
+        }
+    }
+
+    public function getProductById($id,$userType){
+        try {
+            $this->setUserType($userType);
+            $params = [$id];
+            $this->prepareQuery(
+                'SELECT NombreProducto,EstadoProducto,PrecioDeRenta,m.CodigoMarca,IdCategoria,urlImg,CodigoProducto,NombreMarca 
+                FROM Producto p INNER JOIN Marca m ON p.CodigoMarca = m.CodigoMarca WHERE CodigoProducto = ?',
+                $params
+            );
+            $result = $this->execute();
+            if (is_null($result)){ return null; }
+            $product = null;
+            $marca = null;
+            foreach($this->fetchAll($result) as $row){
+                $product = new Producto(
+                    $row['NombreProducto'],
+                    $row['EstadoProducto'],
+                    $row['PrecioDeRenta'],
+                    $row['CodigoMarca'],
+                    $row['IdCategoria'],
+                    $row['urlImg'],
+                    $row['CodigoProducto']
+                );
+                $marca = new Marca($row['NombreMarca'],$row['CodigoMarca']);
+                $product->setMarca($marca);
+            }
+            return $product;
         } catch (Exception $e) {
             $this->showMessages();
         }

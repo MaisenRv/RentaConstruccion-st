@@ -40,5 +40,31 @@ class ViewC extends BaseController{
             'marcas' => $marcas
         ]);
     }
+
+    public function load_stock($stockList){
+        $this->loadView('interfazStock',[
+            'title' => 'Stock',
+            'stockList' => $stockList
+        ]);
+    }
+
+    public function load_product($product){
+        $this->loadView('product/interfazProducto',[
+            'title' => ($product->getNombreProducto()),
+            'producto'=>$product
+        ]);
+    }
+
+    public function load_order_history(){
+        $this->loadView('historialcliente',[
+            'title' => 'Historial pedidos'
+        ]);
+    }
+
+    public function load_order(){
+        $this->loadView('pedido',[
+            'title' => 'Pedido'
+        ]);
+    }
 }
 ?>

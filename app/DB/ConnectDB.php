@@ -5,7 +5,7 @@ namespace DB;
 use Exception;
 
 class ConnectDB{
-    // Connection data
+    // Usuario de proveedor
     private const SERVER_NAME = "localhost";
     private const CONNECT_OPTIONS_PROVEEDOR = [
         "Database" => "RentaConstruccionDB",
@@ -13,6 +13,7 @@ class ConnectDB{
         "PWD" => "1234",
         "CharacterSet" => "UTF-8" 
     ];
+    // Usuario de cliente
     private const CONNECT_OPTIONS_CLIENTE = [
         "Database" => "RentaConstruccionDB",
         "UID" => "Login2",
@@ -20,11 +21,13 @@ class ConnectDB{
         "CharacterSet" => "UTF-8" 
     ];
 
+    // Conexion para proveedor 
     public static function connect_proveedor(){
         try {
             $conn = sqlsrv_connect(ConnectDB::SERVER_NAME, ConnectDB::CONNECT_OPTIONS_PROVEEDOR);
             
             if ($conn) {
+                sqlsrv_configure("WarningsReturnAsErrors", 0);
                 return $conn;
             }else{
                 throw new Exception("NO se pudo conectar a la base de datos\n");
@@ -34,10 +37,13 @@ class ConnectDB{
             die(print_r(sqlsrv_errors(), true));
         }
     }
+
+    // Conexion para cliente
     public static function connect_cliente(){
         try {
             $conn = sqlsrv_connect(ConnectDB::SERVER_NAME, ConnectDB::CONNECT_OPTIONS_CLIENTE);
             if ($conn) {
+                sqlsrv_configure("WarningsReturnAsErrors", 0);
                 return $conn;
             }else{
                 throw new Exception("NO se pudo conectar a la base de datos\n");
