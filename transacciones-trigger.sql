@@ -219,14 +219,67 @@ BEGIN
 END
 
 
+--//////////////////////////////////////////////////////////////////////////////////////////////
+-----------------------------------EJEMPLO DE USO--------------------------------------------------
+DECLARE @Productos listaProductos;
+INSERT INTO @Productos (CodigoProducto, Cantidad)
+VALUES (42,1),(45, 1), (46, 1);
+
+DECLARE @CodigoCLiente INT = 31;
+
+EXEC I_Pedido @Productos,@CodigoCLiente;
+----------------------------------------
 
 -- TIPO DE DATO COMO TABLA PARA LISTAS DE PRODUCTOS ----
 CREATE TYPE listaProductos AS TABLE(
 	CodigoProducto INT,
 	Cantidad INT
 )
+-- Liasta de ids
+CREATE TYPE listaIDs AS TABLE(
+	id INT
+)
 
--- TERMINAR , crea el pedido
+-- ACTUALIZAR EL STOCK DEPENDIDO SI EXISTE PRODUCTOS SIFICIENTES
+CREATE PROC sp_insertar_movimiento_producto_stock
+	@CodigoProveedor INT,
+	@CodigoProducto INT,
+	@Cantidad INT
+AS
+BEGIN
+	IF NOT EXISTS (SELECT * FROM Stock WHERE CodigoProducto = @CodigoProducto)
+	BEGIN
+		RAISERROR('EL producto no existe',16,1);
+	END
+
+	IF ((SELECT TOP 1 CantidadAcumulada FROM Stock WHERE CodigoProducto = @CodigoProducto ORDER BY Fecha DESC) < @Cantidad)
+	BEGIN
+		RAISERROR('Nos existe la cantidad suficiente en stock',16,1);
+	END
+
+	DECLARE @CantidadAcumulada INT = (SELECT TOP 1 CantidadAcumulada FROM Stock WHERE CodigoProducto = @CodigoProducto ORDER BY Fecha DESC) - @Cantidad;
+	DECLARE @NuesvoEstado VARCHAR(50) =
+		CASE
+			WHEN @CantidadAcumulada = 0 THEN 'AGOTADO'
+			ELSE 'Disponible'
+		END
+
+
+	INSERT INTO Stock(CodigoProveedor,CodigoProducto,Fecha,TipoMovimiento,CantidadMovimiento,CantidadAcumulada,Estado) 
+	VALUES(
+		@CodigoProveedor,
+		@CodigoProducto,
+		GETDATE(),
+		'Salida',
+		@Cantidad,
+		@CantidadAcumulada,
+		@NuesvoEstado
+	)
+END
+
+
+
+-- CREA EL PEDIDO
 CREATE PROC I_Pedido
 	@Productos listaProductos READONLY,
 	@CodigoCliente INT
@@ -236,8 +289,69 @@ BEGIN
 		BEGIN TRANSACTION
 		EXEC sp_verificar_usuario @CodigoCliente;
 
-		
+		DECLARE @listaProveedores listaIDs;
 
+		INSERT INTO @listaProveedores 
+		SELECT CodigoProveedor FROM Stock s 
+		INNER JOIN @Productos p ON p.CodigoProducto = s.CodigoProducto 
+		GROUP BY CodigoProveedor;
+
+		---- iterando lista de proveedores
+		DECLARE @id INT;
+
+		DECLARE listaProvee CURSOR FOR 
+		SELECT id FROM @listaProveedores;
+
+		OPEN listaProvee;
+		FETCH NEXT FROM listaProvee INTO @id;
+
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+			EXEC sp_verificar_proveedor @id;
+
+			---CREANDO LOS PEDIDOS PARA CADA PROVEEDOR
+			INSERT INTO Pedido(CodigoCliente,CodigoProveedor) VALUES(@CodigoCliente,@id);
+			DECLARE @CodigoNuevoPedido INT = SCOPE_IDENTITY();
+
+			DECLARE @listaIdProducto listaIDs;
+			INSERT INTO @listaIdProducto
+			SELECT p.CodigoProducto FROM @Productos p
+			INNER JOIN Stock s ON s.CodigoProducto = p.CodigoProducto
+			WHERE CodigoProveedor = @id GROUP BY  p.CodigoProducto;
+
+			--ITERANDO LOS PRODUCTOS DE CADA PORVEEDOR
+			DECLARE @idProducto INT;
+
+			DECLARE CursosProductos CURSOR FOR
+			SELECT id FROM @listaIdProducto;
+
+			OPEN CursosProductos;
+			FETCH NEXT FROM CursosProductos INTO @idProducto;
+
+			WHILE @@FETCH_STATUS = 0 
+			BEGIN
+				---  CREAR LOS DETALLES DE CADA PEDIDO
+				DECLARE @cantidaDeProductos INT = (SELECT Cantidad FROM @Productos WHERE CodigoProducto = @idProducto);
+				EXEC sp_insertar_movimiento_producto_stock @id,@idProducto,@cantidaDeProductos;
+
+				INSERT INTO DetallePedido(CodigoPedido,CodigoProducto,Cantidad)
+				VALUES(@CodigoNuevoPedido,@idProducto,@cantidaDeProductos);
+
+				
+				FETCH NEXT FROM CursosProductos INTO @idProducto;
+			END
+
+			DELETE @listaIdProducto;
+
+			CLOSE CursosProductos;
+			DEALLOCATE CursosProductos;
+
+			FETCH NEXT FROM listaProvee INTO @id;	
+
+		END
+		CLOSE listaProvee;
+		DEALLOCATE listaProvee;
+		COMMIT;
 	END TRY
 	BEGIN CATCH
 		ROLLBACK;
