@@ -112,6 +112,7 @@ class ProductoDao extends BaseDao {
             $sql = "EXEC I_Producto ?,?,?,?,?,?,?,?";
             $this->prepareQuery($sql,$params);
             $this->execute();
+            $this->showMessages();
             header('Location: index.php?action=productos');
             exit();
         } catch (Exception $e) {

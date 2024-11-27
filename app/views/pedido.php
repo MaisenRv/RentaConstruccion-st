@@ -51,6 +51,8 @@ if (isset($_GET['eliminar'])) {
         </tr>
       </tfoot>
     </table>
-    <button class="btn-addProduct order-btn">Realizar pedido</button>
+    <form action="index.php?action=hacer_pedido" method="post">
+      <button type="submit" class="btn-addProduct order-btn">Realizar pedido</button>
+    </form>
   <?PHP } ?>
 </div>

@@ -71,11 +71,12 @@ class UsuarioDao extends BaseDao {
             $this->prepareQuery($sql,$params);
             $result = $this->execute();
             if (is_null($result)){ return null; }
-            
+            $this->showMessages();
+            echo '<script>window.history.back();</script>';
         }catch (Exception $e){
             echo '<script>window.history.back();</script>';
             $this->showMessages();
-            exit();
+            exit;
         }
     }
 }

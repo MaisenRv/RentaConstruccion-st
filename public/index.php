@@ -4,6 +4,7 @@ require_once __DIR__."/../app/autoload.php";
 use Controllers\CategoriaC;
 use Controllers\LocalidadC;
 use Controllers\MarcaC;
+use Controllers\PedidoC;
 use Controllers\RolC;
 use Controllers\UsuarioC;
 use Controllers\ViewC;
@@ -21,6 +22,7 @@ $categoriasC = new CategoriaC();
 $productoC  = new ProductoC();
 $marcaC = new MarcaC();
 $stockC = new StockC();
+$pedidoC = new PedidoC();
 
 // Router
 $userType = $usuarioC->getUserType();
@@ -87,6 +89,8 @@ elseif(UsuarioC::checkSession()){
         $viewC->load_order_history(); 
     }elseif($actionName == "pedido"){ 
         $viewC->load_order(); 
+    }elseif($actionName == "hacer_pedido"){ 
+        $pedidoC->makeOrder($userType);
     }
 
 }
