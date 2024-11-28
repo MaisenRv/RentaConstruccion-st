@@ -55,9 +55,10 @@ class ViewC extends BaseController{
         ]);
     }
 
-    public function load_order_history(){
+    public function load_order_history($historial){
         $this->loadView('historialcliente',[
-            'title' => 'Historial pedidos'
+            'title' => 'Historial pedidos',
+            'historial'=> $historial
         ]);
     }
 

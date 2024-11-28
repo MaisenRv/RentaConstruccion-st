@@ -94,9 +94,6 @@ class BaseDao
     protected function showMessages()
     {
         $messages = $this->getMessages();
-        if (empty($messages)) {
-           return true;
-        }
         foreach ($messages as $r) {
             echo '<script>alert("' . substr($r, 61) . '");</script>';
             // echo '<script>alert("'.$r.'");</script>';

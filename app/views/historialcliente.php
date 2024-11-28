@@ -1,9 +1,10 @@
 <div class="historial-container">
+  <?PHP if ($historial != null) {?>
   <div class="historial-header">Historial del Cliente</div>
   <table>
     <thead>
       <tr>
-        <th>Código Historial</th>
+        <!-- <th>Código Historial</th> -->
         <th>Código Pedido</th>
         <th>Fecha Inicio</th>
         <th>Fecha Fin</th>
@@ -12,30 +13,20 @@
       </tr>
     </thead>
     <tbody>
+
+    <?PHP foreach ($historial as $h) { ?>
       <tr>
-        <td>1</td>
-        <td>1001</td>
-        <td>2024-11-01</td>
-        <td>2024-11-15</td>
-        <td>Completado</td>
-        <td>Entrega realizada a tiempo.</td>
+        <!-- <td>1</td> -->
+        <td><?PHP echo $h->getCodigoPedido(); ?></td>
+        <td><?PHP echo $h->getFechaInicio(); ?></td>
+        <td><?PHP echo $h->getFechaFin(); ?></td>
+        <td><?PHP echo $h->getEstado(); ?></td>
+        <td><?PHP echo $h->getObservaciones(); ?></td>
       </tr>
-      <tr>
-        <td>2</td>
-        <td>1002</td>
-        <td>2024-11-10</td>
-        <td>2024-11-20</td>
-        <td>En proceso</td>
-        <td>Esperando confirmación del cliente.</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>1003</td>
-        <td>2024-11-15</td>
-        <td>2024-11-25</td>
-        <td>Pendiente</td>
-        <td>Ninguna observación.</td>
-      </tr>
+      <?PHP } ?>
     </tbody>
   </table>
+  <?PHP } else{ ?>
+    No has realizado un pedido aun
+  <?PHP } ?>
 </div>

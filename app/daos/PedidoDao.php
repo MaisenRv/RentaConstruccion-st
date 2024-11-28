@@ -43,6 +43,7 @@ class PedidoDao extends BaseDao {
         } catch (Exception $e) {
             $this->showMessages();
             echo '<script>window.history.back();</script>';
+            exit;
         }
     }
 
