@@ -374,3 +374,14 @@ BEGIN
 	VALUES(@CodigoPedido,GETDATE(),GETDATE(),'En proceso','Sin observacion');
 
 END
+
+-- Trigger producto
+CREATE TRIGGER TR_producto
+ON Producto
+AFTER INSERT
+AS
+BEGIN
+	DECLARE @NombreProducto VARCHAR(100);
+	SELECT @NombreProducto = NombreProducto FROM inserted;
+	PRINT 'El producto ' + @NombreProducto + 'se ha creado exitosamente';
+END

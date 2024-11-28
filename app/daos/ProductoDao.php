@@ -113,8 +113,7 @@ class ProductoDao extends BaseDao {
             $this->prepareQuery($sql,$params);
             $this->execute();
             $this->showMessages();
-            header('Location: index.php?action=productos');
-            exit();
+            echo '<script>window.history.back();</script>';
         } catch (Exception $e) {
             $this->showMessages();
             exit();
