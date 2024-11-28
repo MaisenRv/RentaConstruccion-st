@@ -18,8 +18,8 @@
       <tr>
         <!-- <td>1</td> -->
         <td><?PHP echo $h->getCodigoPedido(); ?></td>
-        <td><?PHP echo $h->getFechaInicio(); ?></td>
-        <td><?PHP echo $h->getFechaFin(); ?></td>
+        <td><?PHP echo $h->getFechaInicio()->format('Y-m-d H:i:s'); ?></td>
+        <td><?PHP echo $h->getFechaFin()->format('Y-m-d H:i:s'); ?></td>
         <td><?PHP echo $h->getEstado(); ?></td>
         <td><?PHP echo $h->getObservaciones(); ?></td>
       </tr>

@@ -358,3 +358,19 @@ BEGIN
 		PRINT ERROR_MESSAGE();
 	END CATCH
 END
+
+
+-- Trigger de historial pedido
+CREATE TRIGGER TR_pedio_historial
+ON Pedido
+AFTER INSERT
+AS
+BEGIN
+	DECLARE @CodigoPedido INT;
+
+	SELECT @CodigoPedido = CodigoPedido FROM inserted;
+
+	INSERT INTO HistorialPedido(CodigoPedido,FechaInicio,FechaFin,Estado,Observaciones)
+	VALUES(@CodigoPedido,GETDATE(),GETDATE(),'En proceso','Sin observacion');
+
+END
